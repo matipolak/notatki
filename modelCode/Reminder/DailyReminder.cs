@@ -9,6 +9,17 @@ namespace Notatki.modelCode
     [Serializable]
     public class DailyReminder : EventParameter
     {
+        public DailyReminder()
+        {
+            Monday = false;
+            Tuesday = false;
+            Wednesday = false;
+            Thursday = false;
+            Friday = false;
+            Saturday = false;
+            Sunday = false;
+        }
+
         public String Name;
         public bool Monday;
         public bool Tuesday;
