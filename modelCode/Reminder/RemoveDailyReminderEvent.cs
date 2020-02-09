@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 namespace Notatki.modelCode.Reminder
 {
     [Serializable]
-    public class AddDailyReminderEvent : Event
+    public class RemoveDailyReminderEvent : Event
     {
         DailyReminder DailyReminder;
 
-        public AddDailyReminderEvent() : base()
+        public RemoveDailyReminderEvent() : base()
         {
             DailyReminder = (DailyReminder)parameter;
         }
 
-        public AddDailyReminderEvent(DailyReminder DailyReminder) : base()
+        public RemoveDailyReminderEvent(DailyReminder DailyReminder) : base()
         {
             this.DailyReminder = DailyReminder;
             parameter = DailyReminder;
@@ -24,13 +24,13 @@ namespace Notatki.modelCode.Reminder
 
         public override void DoEvent(State state)
         {
-            state.DailyReminders.Add(DailyReminder);
+            state.DailyReminders.RemoveAll((x => x.Name.Equals(DailyReminder.Name)));
             state.lastTimeUpdateReminders = DateTime.Now;
         }
 
         public override void RevertEvent(State state)
         {
-            state.DailyReminders.RemoveAll((x => x.Name.Equals(DailyReminder.Name)));
+            state.DailyReminders.Add(DailyReminder);
             state.lastTimeUpdateReminders = DateTime.Now;
         }
     }

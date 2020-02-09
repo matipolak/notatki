@@ -10,9 +10,26 @@
 
 
     <Grid>
-        <Grid HorizontalAlignment="Left" Height="430" Margin="569,10,0,0" VerticalAlignment="Top" Width="221" Background="#19000000">
-            <Button Style="{StaticResource ButtonStyle}" x:Name="edit" Content="Edit" HorizontalAlignment="Left" Margin="10,373,0,0" VerticalAlignment="Top" Width="201" Height="47" Click="Edit_reminder_click"/>
-            <Label x:Name="label" Content="Najbliższe powiadomienia:" Margin="10,10,10,0" VerticalAlignment="Top" FontSize="16" Background="{x:Null}" Foreground="White"/>
+        <Grid x:Name="RemindersGrid" HorizontalAlignment="Left" Height="430" Margin="569,10,0,0" VerticalAlignment="Top" Width="221" Background="#19000000">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7*"/>
+                <RowDefinition Height="208*"/>
+            </Grid.RowDefinitions>
+            <Label Style="{StaticResource LabelStyle}" x:Name="label" Content="Dzisiejsze osiągnięcia:" Margin="10,10,10,0" VerticalAlignment="Top" Grid.RowSpan="2" />
+            <Label Style="{StaticResource LabelStyle}" x:Name="arrowButton" Content=">" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,-12,0,0" RenderTransformOrigin="0.259,0.15" MouseLeftButtonDown="Label3_Copy_MouseLeftButtonDown" Height="33" Grid.RowSpan="2" Width="30"/>
+            <ScrollViewer HorizontalAlignment="Left" Height="384" Margin="0,27,0,0" VerticalAlignment="Top" Width="221" Grid.Row="1">
+                <Grid x:Name="ReminderGrid" Margin="0,0,0,0" Width="203"/>
+            </ScrollViewer>
+        </Grid>
+        <Grid x:Name="OptionalGrid" HorizontalAlignment="Left" Height="430" Margin="10,10,0,0" VerticalAlignment="Top" Width="559">
+            <Label Style="{StaticResource LabelStyle}" x:Name="label1" Content="Historia:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Label Style="{StaticResource LabelStyle}" x:Name="label2" Content="Req:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="435,0,0,0" RenderTransformOrigin="0.259,0.15"/>
+            <Label Style="{StaticResource LabelStyle}" x:Name="label3" Content="All:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="497,0,0,0" RenderTransformOrigin="0.259,0.15"/>
+            <ScrollViewer HorizontalAlignment="Left" Height="327" Margin="0,31,0,0" VerticalAlignment="Top" Width="559">
+                <Grid x:Name="HistoryGrid" Margin="0,0,0,0"/>
+            </ScrollViewer>
+            <Button Style="{StaticResource ButtonStyle}" x:Name="edit" Content="Edit reminders" HorizontalAlignment="Left" Margin="10,374,0,0" VerticalAlignment="Top" Width="285" Height="46" Click="Edit_reminder_click"/>
+
         </Grid>
     </Grid>
 </Window>

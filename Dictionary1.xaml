@@ -4,24 +4,47 @@
 
 
     <Style x:Key="WindowStyle" TargetType="{x:Type Window}">
-        <Setter Property="Background" Value="CornflowerBlue"/>
-        <Setter Property="Opacity" Value="0.8"/>
+        <Setter Property="Background" Value="Black"/>
+        <Setter Property="Opacity" Value="1"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="WindowStyle" Value="None"/>
         <Setter Property="AllowsTransparency" Value="True"/>
     </Style>
 
     <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="CornflowerBlue"/>
+        <Setter Property="Background" Value="Black"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="BorderThickness" Value="1,1,1,1"/>
         <Setter Property="BorderBrush" Value="White"/>
     </Style>
-
+    
     <Style x:Key="LabelStyle" TargetType="{x:Type Label}">
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="FontSize" Value="16"/>
+    </Style>
 
+    <Style x:Key="CheckBoxStyle" TargetType="{x:Type CheckBox}">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+    
+    <Style x:Key="TargetDropGridStyle" TargetType="{x:Type DataGrid}">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+
+    <Style x:Key="ComboBoxStyle" TargetType="{x:Type ComboBox}">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Background" Value="Red"/>
+        <Setter Property="BorderBrush" Value="Red"/>
+    </Style>
+
+    <Style x:Key="ComboBoxItemStyle" TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Background" Value="Red"/>
+        <Setter Property="BorderBrush" Value="Red"/>
     </Style>
 
 </ResourceDictionary>

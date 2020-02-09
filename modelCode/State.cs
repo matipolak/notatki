@@ -10,6 +10,7 @@ namespace Notatki.modelCode
     public class State
     {
         public List<DailyReminder> DailyReminders;
+        public DateTime lastTimeUpdateReminders;
         public State()
         {
             DailyReminders = new List<DailyReminder>();

@@ -71,8 +71,32 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Achivement.cs" />
+    <Compile Include="DailyAchievement.xaml.cs">
+      <DependentUpon>DailyAchievement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DiagramsMain.xaml.cs">
+      <DependentUpon>DiagramsMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="modelCode\AchievementAnalizer.cs" />
+    <Compile Include="modelCode\Achievement\Achievement.cs" />
+    <Compile Include="modelCode\Achievement\DailyAchievements.cs" />
     <Compile Include="modelCode\EventParameter.cs" />
+    <Compile Include="modelCode\AchievementManager.cs" />
+    <Compile Include="modelCode\Reminder\EditDailyReminderEvent.cs" />
+    <Compile Include="modelCode\Reminder\EditDailyReminder.cs" />
+    <Compile Include="modelCode\Reminder\ReminderType.cs" />
+    <Compile Include="modelCode\Reminder\RemoveDailyReminderEvent.cs" />
+    <Compile Include="viewHelper\GridList.cs" />
     <Compile Include="viewHelper\WindowEnricher.cs" />
+    <Page Include="DailyAchievement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DiagramsMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dictionary1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -140,6 +164,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="trash_recyclebin_empty_closed.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

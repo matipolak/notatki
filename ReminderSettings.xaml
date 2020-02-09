@@ -6,9 +6,13 @@
         xmlns:local="clr-namespace:Notatki"
         mc:Ignorable="d"
         Style="{StaticResource WindowStyle}"
-        Title="FlowersSettings" Height="450" Width="932">
+        Title="FlowersSettings" Height="450" Width="1039">
     <Grid>
-        <ScrollViewer x:Name="RemindersScrool" Height="378" Margin="10,10,10,0" VerticalAlignment="Top" Background="#19000000">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="371*"/>
+            <ColumnDefinition Width="561*"/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer x:Name="RemindersScrool" Height="378" Margin="10,10,10,0" VerticalAlignment="Top" Background="#19000000" Grid.ColumnSpan="2">
             <Grid x:Name="ReminderListGrid"  Margin="0,0,0,0">
                 <Label Style="{StaticResource LabelStyle}" x:Name="NameLabel" Content="Name" Margin="0,0,0,0" Height="40" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
                 <Label Style="{StaticResource LabelStyle}" x:Name="MondayLabel" Content="Monday" Height="40" VerticalAlignment="Top" Margin="200,0,0,0" Grid.ColumnSpan="2"/>
@@ -18,11 +22,17 @@
                 <Label Style="{StaticResource LabelStyle}" x:Name="FridayLabel" Content="Friday" Height="40" VerticalAlignment="Top" Margin="600,0,0,0" Grid.ColumnSpan="2"/>
                 <Label Style="{StaticResource LabelStyle}" x:Name="SaturdayLabel" Content="Saturday" Height="40" VerticalAlignment="Top" Margin="700,0,0,0" Grid.ColumnSpan="2"/>
                 <Label Style="{StaticResource LabelStyle}" x:Name="SundayLabel" Content="Sunday" Height="40" VerticalAlignment="Top" Margin="800,0,0,0" Grid.ColumnSpan="2"/>
+                <Label Style="{StaticResource LabelStyle}" x:Name="TypeLabel" Content="Type" Height="40" VerticalAlignment="Top" Margin="887,0,-87,0"/>
             </Grid>
 
         </ScrollViewer>
-        <Button Style="{StaticResource ButtonStyle}" x:Name="SaveButton" Content="Save" HorizontalAlignment="Left" Margin="563,410,0,0" VerticalAlignment="Top" Width="161" Height="30" Click="SaveButton_Click"/>
-        <Button Style="{StaticResource ButtonStyle}" x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="729,410,0,0" VerticalAlignment="Top" Width="161"  Height="30" Click="CancelButton_Click" />
+        <Button Style="{StaticResource ButtonStyle}" x:Name="SaveButton" Content="Save" HorizontalAlignment="Left" Margin="288,410,0,0" VerticalAlignment="Top" Width="161" Height="30" Click="SaveButton_Click" Grid.Column="1"/>
+        <Button Style="{StaticResource ButtonStyle}" x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="454,410,0,0" VerticalAlignment="Top" Width="161"  Height="30" Click="CancelButton_Click" Grid.Column="1" />
         <Button Style="{StaticResource ButtonStyle}" x:Name="AddButton_Copy" Content="Add reminder" HorizontalAlignment="Left" Margin="10,410,0,0" VerticalAlignment="Top" Width="161" Height="30" Click="AddButton_Copy_Click"/>
+        <Rectangle HorizontalAlignment="Left" Height="30" Margin="176,410,0,0" Stroke="White" VerticalAlignment="Top" Width="521" Grid.ColumnSpan="2" Fill="Black" AllowDrop="True" Drop="Rectangle_Drop" StrokeDashArray="4 4"
+                                                       SnapsToDevicePixels="True"/>
+        <Label Style="{StaticResource LabelStyle}" x:Name="label" Content="Drop to remove" HorizontalAlignment="Left" Margin="157,408,0,0" VerticalAlignment="Top" Height="30" Width="126" Grid.Column="1" Opacity="0.6"/>
+
+
     </Grid>
 </Window>

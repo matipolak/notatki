@@ -7,7 +7,8 @@ using System.Xml.Serialization;
 
 namespace Notatki.modelCode
 {
-    [XmlInclude(typeof(DailyReminder))]
+    [XmlInclude(typeof(DailyReminder)),
+     XmlInclude(typeof(EditDailyReminder))]
     [Serializable]
     public abstract class EventParameter
     {

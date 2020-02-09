@@ -9,7 +9,9 @@ using System.Xml.Serialization;
 
 namespace Notatki
 {
-    [XmlInclude(typeof(AddDailyReminderEvent))]
+    [XmlInclude(typeof(AddDailyReminderEvent)), 
+     XmlInclude(typeof(RemoveDailyReminderEvent)),
+     XmlInclude(typeof(EditDailyReminderEvent))]
     [Serializable]
     public abstract class Event
     {

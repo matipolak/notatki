@@ -23,6 +23,10 @@ namespace Notatki
         List<Grid> ListOfRemindersGrids = new List<Grid>();
         List<DailyReminder> OldListOfReminders = new List<DailyReminder>();
         ModelManager model;
+        ResourceDictionary myResourceDictionary = new ResourceDictionary
+        {
+            Source = new Uri("Dictionary1.xaml", UriKind.Relative)
+        };
 
         public ReminderSettings(List<DailyReminder> OldListOfReminders, ModelManager model)
         {
@@ -47,7 +51,22 @@ namespace Notatki
                 ListOfRemindersGrids.Add(newElement);
                 this.ReminderListGrid.Children.Add(newElement);
             }
-             
+
+            updateVerticalPositionOfListElements();
+        }
+
+        private void removeElement(String name)
+        {
+            foreach (Grid elemet in ListOfRemindersGrids)
+            {
+                String elementName = ((TextBox)LogicalTreeHelper.FindLogicalNode(elemet, textboxName)).Text;
+                if(elementName.Equals(name)) {
+                    ListOfRemindersGrids.Remove(elemet);
+                    this.ReminderListGrid.Children.Remove(elemet);
+                    return;
+                }
+            }
+
             updateVerticalPositionOfListElements();
         }
 
@@ -73,7 +92,7 @@ namespace Notatki
             grid.VerticalAlignment = VerticalAlignment.Top;
             
             grid.Height = 60;
-
+            grid.MouseLeftButtonDown += Grid_MouseLeftButtonDown;
             TextBox textbox = new TextBox();
             textbox.Width = 180;
             textbox.HorizontalAlignment = HorizontalAlignment.Left;
@@ -91,7 +110,47 @@ namespace Notatki
                 grid.Children.Add(checkBox);
             }
 
+            ComboBox comboBox = new ComboBox();
+            ComboBoxItem comboBoxItem = new ComboBoxItem();
+            comboBoxItem.Content = "INTEGER";
+            comboBoxItem.Style = myResourceDictionary["ComboBoxItemStyle"] as Style;
+            ComboBoxItem comboBoxItem2 = new ComboBoxItem();
+            comboBoxItem2.Content = "BOOLEAN";
+            comboBoxItem2.Style = myResourceDictionary["ComboBoxItemStyle"] as Style;
+            comboBoxItem.IsSelected = true;
+
+            comboBox.Items.Add(comboBoxItem);
+            comboBox.Items.Add(comboBoxItem2);
+            comboBox.Margin = new Thickness( 870, 0, 10, 0);
+            comboBox.HorizontalAlignment = HorizontalAlignment.Left;
+            comboBox.Height = 32;
+            comboBox.Style = myResourceDictionary["ComboBoxStyle"] as Style;
+            comboBox.Name = "type";
+            grid.Children.Add(comboBox);
+
+            if (reminder.type.Equals(ReminderType.BOOLEAN))
+            {
+                comboBox.SelectedItem = comboBoxItem2;
+            }
+            else
+            {
+                comboBox.SelectedItem = comboBoxItem;
+            }
+
             return grid;
+        }
+
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Grid grid = (Grid)sender;
+            String name = ((TextBox)LogicalTreeHelper.FindLogicalNode(grid, textboxName)).Text;
+            DragDrop.DoDragDrop(grid, name, DragDropEffects.Move);
+        }
+
+        private void Rectangle_Drop(object sender, DragEventArgs e)
+        {
+            String gridName = (String)e.Data.GetData(DataFormats.UnicodeText);
+            removeElement(gridName);
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -113,28 +172,50 @@ namespace Notatki
                 DailyReminder.Friday = ((CheckBox)LogicalTreeHelper.FindLogicalNode(elemet, daysName[4])).IsChecked ?? false;
                 DailyReminder.Saturday = ((CheckBox)LogicalTreeHelper.FindLogicalNode(elemet, daysName[5])).IsChecked ?? false;
                 DailyReminder.Sunday = ((CheckBox)LogicalTreeHelper.FindLogicalNode(elemet, daysName[6])).IsChecked ?? false;
+                ComboBoxItem comboBoxItem = (ComboBoxItem)((ComboBox)LogicalTreeHelper.FindLogicalNode(elemet, "type")).SelectedItem;
+                Enum.TryParse(comboBoxItem.Content.ToString(), out ReminderType type);
+                DailyReminder.type = type;
                 NewListOfReminders.Add(DailyReminder);
             }
-            var addEvents = CreateAddDailyReminderEvents(NewListOfReminders, this.OldListOfReminders);
-            foreach (AddDailyReminderEvent addEvent in addEvents)
+            var events = CreateEvents(NewListOfReminders, this.OldListOfReminders);
+            foreach (Event actualEvent in events)
             {
-                model.CommitEvent(addEvent);
+                model.CommitEvent(actualEvent);
             }
             model.SaveModel();
             this.Close();
         }
 
-        private List<AddDailyReminderEvent> CreateAddDailyReminderEvents(List<DailyReminder> NewListOfReminders, List<DailyReminder> OldListOfReminders)
+        private List<Event> CreateEvents(List<DailyReminder> NewListOfReminders, List<DailyReminder> OldListOfReminders)
         {
-            List<AddDailyReminderEvent> result = new List<AddDailyReminderEvent>();
-            foreach(DailyReminder actualReminder in NewListOfReminders)
+            List<Event> result = new List<Event>();
+            foreach (DailyReminder actualReminder in NewListOfReminders)
             {
-                if(OldListOfReminders.FindAll(x => x.Name.Equals(actualReminder.Name)).Count == 0)
+                if (OldListOfReminders.FindAll(x => x.Name.Equals(actualReminder.Name)).Count == 0)
                 {
                     result.Add(new AddDailyReminderEvent(actualReminder));
                 }
             }
+
+            foreach (DailyReminder oldReminder in OldListOfReminders)
+            {
+                if (NewListOfReminders.FindAll(x => x.Name.Equals(oldReminder.Name)).Count == 0)
+                {
+                    result.Add(new RemoveDailyReminderEvent(oldReminder));
+                }
+            }
+
+            foreach (DailyReminder actualReminder in NewListOfReminders)
+            {
+                int oldIndex = OldListOfReminders.FindIndex(x => x.Name.Equals(actualReminder.Name));
+                if (oldIndex != -1 && !OldListOfReminders[oldIndex].Equals(actualReminder))
+                {
+                    result.Add(new EditDailyReminderEvent(OldListOfReminders[oldIndex], actualReminder));
+                }
+            }
+
             return result;
         }
+
     }
 }
